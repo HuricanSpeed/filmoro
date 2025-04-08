@@ -3,6 +3,7 @@
 
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
+import { ScrollShadow } from "@heroui/react";
 import { Skeleton } from "@heroui/skeleton";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -22,7 +23,7 @@ export default function SelectionPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            fetch("http://localhost:3000/api/films/popular")
+            fetch("http://localhost:3001/api/films/popular")
                 .then(response => response.json())
                 .then(data => {
                     setFilms(data.data)
@@ -70,28 +71,30 @@ export default function SelectionPage() {
                 <p className={`text-lg font-light `}>Filmů na výběr zbývá <span className={`${selectedFilms.length >= 0 ? "text-green-500": ""} ${selectedFilms.length == 5 ? "text-red-500": ""}`}>{5-selectedFilms.length}</span></p>
             </div>
             <div className="flex flex-wrap h-5/6 w-fit justify-center items-center overflow-y-auto gap-7 rounded-lg">
-                {films.length < 1 ? (
-                    <div className="flex flex-wrap w-full justify-center items-center overflow-y-auto gap-7">
-                        {skeletonElements}
-                    </div>
-                ) : (
-                    films.map(film => (
-                    <Card
-                        key={film.id}
-                        isPressable
-                        className={`m-1 border-4 ${selectedFilms.includes(film.id) ? "border-green-500 grayscale-0 transition-all" : "border-transparent grayscale"}`}
-                        radius="lg"
-                        onPress={() => handleCardClick(film.id)}
-                    >
-                        <Image
-                            alt={film.title}
-                            className="object-cover"
-                            height={450}
-                            width={300}
-                            src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${film.poster_path}`}
-                        />
-                    </Card>
-                )))}
+                <ScrollShadow className="w-[100rem] h-[40rem] flex flex-wrap justify-center items-center overflow-y-auto gap-7 rounded-lg">
+                    {films.length < 1 ? (
+                        <div className="flex flex-wrap w-full justify-center items-center overflow-y-auto gap-7">
+                            {skeletonElements}
+                        </div>
+                    ) : (
+                        films.map(film => (
+                        <Card
+                            key={film.id}
+                            isPressable
+                            className={`m-1 border-4 ${selectedFilms.includes(film.id) ? "border-green-500 grayscale-0 transition-all" : "border-transparent grayscale"}`}
+                            radius="lg"
+                            onPress={() => handleCardClick(film.id)}
+                        >
+                            <Image
+                                alt={film.title}
+                                className="object-cover"
+                                height={450}
+                                width={300}
+                                src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${film.poster_path}`}
+                            />
+                        </Card>
+                    )))}
+                </ScrollShadow>
             </div>
             <Button 
                 isDisabled={selectedFilms.length < 5 ? true : false}

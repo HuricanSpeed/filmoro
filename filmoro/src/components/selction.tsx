@@ -1,10 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
-import { authOptions } from "@/lib/auth";
 import { Button } from "@heroui/button";
-import { Card, CardFooter } from "@heroui/card";
+import { Card } from "@heroui/card";
 import { Skeleton } from "@heroui/skeleton";
-import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";

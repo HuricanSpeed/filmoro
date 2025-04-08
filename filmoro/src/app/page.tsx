@@ -13,7 +13,7 @@ export default function Home() {
 
   // ✅ Přesměrování pouze při změně session
   useEffect(() => {
-    if (session?.user?.filmsIds) {
+    if (true) {
       router.replace  ("/selection");
     }
   }, [session, router]); // Přesměruje pouze při změně session
